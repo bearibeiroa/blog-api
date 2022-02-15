@@ -9,13 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-
       displayName: {
         allowNull: false,
         type: Sequelize.STRING,
-
       },
-
       email: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -25,13 +22,10 @@ module.exports = {
           notEmpty: true
         }
       },
-
       password: {
         allowNull: false,
         type: Sequelize.STRING,
-
       },
-
       image: {
         type: Sequelize.STRING,
       },
