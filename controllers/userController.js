@@ -1,31 +1,18 @@
-require('dotenv').config();
-
-const jwt = require('jsonwebtoken');
+const rescue = require('express-rescue');
 const { User } = require('../models');
-const { requestsValidation } = require('./validations/userValidations');
+const { CONFLICT } = require('../errors/errorStatus');
+const { USER_ALLREADY_EXIST } = require('../errors/errorMessages');
+const { createUser } = require('../services/userServices');
 
-const secret = process.env.JWT_SECRET;
+const create = rescue(async (req, res) => {
+  const { displayName, email, password, image } = req.body;
 
-const createUser = async (req, res) => {
-  try {
-    const { displayName, email, password, image } = req.body;
+  const userEmail = await User.findOne({ where: { email } });
 
-    const user = await User.create({ displayName, email, password, image });
+  if (userEmail) return res.status(CONFLICT).json(USER_ALLREADY_EXIST);
+  const token = await createUser(displayName, email, password, image);
 
-    const jwtConfig = {
-      expiresIn: '1d',
-      algorithm: 'HS256',
-    };
+  return res.status(201).json({ token });
+});
 
-    const token = jwt.sign({ username: user.displayName }, secret, jwtConfig);
-
-    res.status(201).json({ token });
-  } catch (error) {
-    const { status, message } = requestsValidation(error);
-    res.status(status).json({ message });
-  }
-};
-
-module.exports = {
-  createUser,
-};
+module.exports = { create };

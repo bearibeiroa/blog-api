@@ -1,31 +1,16 @@
-require('dotenv').config();
+const rescue = require('express-rescue');
+const { createToken } = require('../services/loginServices');
+const { INVALID_FIELDS } = require('../errors/errorMessages');
+const { BAD_REQUEST } = require('../errors/errorStatus');
 
-const jwt = require('jsonwebtoken');
-const { User } = require('../models');
-const { accessValidation } = require('./validations/loginValidations');
+const userLogin = rescue(async (req, res) => {
+  const { email } = req.body;
 
-const secret = process.env.JWT_SECRET;
+  const result = await createToken(email);
 
-const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  const errors = accessValidation(email, password);
+  if (result.message) return res.status(BAD_REQUEST).json(INVALID_FIELDS);
 
-  if (errors) {
-    return res.status(400).json({ message: errors.message });
-  }
-  const user = await User.findAll({ where: { email, password } });
-  if (user.length < 1) return res.status(400).json({ message: 'Invalid fields' });
+    return res.status(200).json(result);
+});
 
-  const jwtConfig = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
-  };
-
-  const token = jwt.sign({ username: user }, secret, jwtConfig);
-
-  return res.status(200).json({ token });
-};
-
-module.exports = {
-  loginUser,
-};
+module.exports = { userLogin };
