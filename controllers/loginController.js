@@ -4,13 +4,13 @@ const { INVALID_FIELDS } = require('../errors/errorMessages');
 const { BAD_REQUEST } = require('../errors/errorStatus');
 
 const userLogin = rescue(async (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
-  const result = await createToken(email);
+  const tokenResult = await createToken(email, password);
 
-  if (result.message) return res.status(BAD_REQUEST).json(INVALID_FIELDS);
+  if (tokenResult.message) return res.status(BAD_REQUEST).json(INVALID_FIELDS);
 
-    return res.status(200).json(result);
+    return res.status(200).json(tokenResult);
 });
 
 module.exports = { userLogin };
