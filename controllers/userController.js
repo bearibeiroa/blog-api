@@ -1,8 +1,8 @@
 const rescue = require('express-rescue');
 const { User } = require('../models');
-const { CONFLICT } = require('../errors/errorStatus');
-const { USER_ALLREADY_EXIST } = require('../errors/errorMessages');
-const { createUser, getAllUsers } = require('../services/userServices');
+const { CONFLICT, NOT_FOUND } = require('../errors/errorStatus');
+const { USER_ALLREADY_EXIST, USER_DOES_NOT_EXISTS } = require('../errors/errorMessages');
+const { createUser, getAllUsers, getByPk } = require('../services/userServices');
 
 const create = rescue(async (req, res) => {
   const { displayName, email, password, image } = req.body;
@@ -20,7 +20,17 @@ const getUsers = rescue(async (_req, res) => {
   return res.status(200).json(users);
 });
 
+const getUsersById = rescue(async (req, res) => {
+  const { id } = req.params;
+  const user = await getByPk(id);
+
+  if (!user) return res.status(NOT_FOUND).json(USER_DOES_NOT_EXISTS);
+
+  return res.status(200).json(user);
+});
+
 module.exports = {
   create,
   getUsers,
+  getUsersById,
 };
