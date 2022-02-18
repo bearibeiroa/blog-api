@@ -1,7 +1,7 @@
-const { Categories } = require('../models');
+const { Category } = require('../models');
 
 const create = async (name) => {
-  const categories = await Categories.create({ name });
+  const categories = await Category.create({ name });
 
   return categories;
 };
