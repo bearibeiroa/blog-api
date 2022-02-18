@@ -6,11 +6,11 @@ const { BAD_REQUEST } = require('../errors/errorStatus');
 const userLogin = rescue(async (req, res) => {
   const { email, password } = req.body;
 
-  const tokenResult = await createToken(email, password);
+  const token = await createToken(email, password);
 
-  if (tokenResult.message) return res.status(BAD_REQUEST).json(INVALID_FIELDS);
+  if (token.message) return res.status(BAD_REQUEST).json(INVALID_FIELDS);
 
-    return res.status(200).json(tokenResult);
+  return res.status(200).json({ token });
 });
 
 module.exports = { userLogin };
