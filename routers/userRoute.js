@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { create, getUsers } = require('../controllers/userController');
+const { create, getUsers, getUsersById } = require('../controllers/userController');
 const { authentication } = require('../middlewares/authentication');
 const {
   displayNameValidation,
@@ -13,6 +13,10 @@ const {
 router.get('/',
   authentication,
   getUsers);
+
+router.get('/:id',
+  authentication,
+  getUsersById);
 
 router
   .post('/',
