@@ -15,28 +15,25 @@ module.exports = {
         type: Sequelize.STRING
       },
       userId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id',
-        },
+        }
       },
       published: {
         allowNull: false,
-        type: 'TIMESTAMP',
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE
       },
       updated: {
         allowNull: false,
-        type: 'TIMESTAMP',
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE
       }
     });
   },
   down: async (queryInterface, _Sequelize) => {
     return queryInterface.dropTable('BlogPosts');
   }
-}; 
+};
