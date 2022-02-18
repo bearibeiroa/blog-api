@@ -7,6 +7,8 @@ const USER_ALLREADY_EXIST = { message: 'User already registered' };
 const INVALID_FIELDS = { message: 'Invalid fields' };
 const EMPTY_EMAIL = { message: '"email" is not allowed to be empty' };
 const EMPTY_PASSWORD = { message: '"password" is not allowed to be empty' };
+const INVALID_TOKEN = { message: 'Expired or invalid token' };
+const TOKEN_NOT_FOUND = { message: 'Token not found' };
 
 module.exports = {
   DISPLAY_NAME,
@@ -18,4 +20,6 @@ module.exports = {
   INVALID_FIELDS,
   EMPTY_EMAIL,
   EMPTY_PASSWORD,
+  INVALID_TOKEN,
+  TOKEN_NOT_FOUND,
 };

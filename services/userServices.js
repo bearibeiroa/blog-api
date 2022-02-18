@@ -9,7 +9,16 @@ const createUser = async (displayName, email, password, image) => {
 
   const token = jwt.sign({ tokenValue: { email } }, SECRET);
 
+  console.log(token);
   return token;
 };
 
-module.exports = { createUser }; 
+const getUserByEmail = async (email) => User.findOne({ where: { email } });
+
+const getAllUsers = async () => User.findAll();
+
+module.exports = {
+  createUser,
+  getUserByEmail,
+  getAllUsers,
+}; 
