@@ -4,6 +4,7 @@ const EMAIL_REQUEST = { message: '"email" is required' };
 const PASSWORD = { message: '"password" length must be 6 characters long' };
 const PASSWORD_REQUEST = { message: '"password" is required' };
 const USER_ALLREADY_EXIST = { message: 'User already registered' };
+const USER_DOES_NOT_EXISTS = { message: 'User does not exist' };
 const INVALID_FIELDS = { message: 'Invalid fields' };
 const EMPTY_EMAIL = { message: '"email" is not allowed to be empty' };
 const EMPTY_PASSWORD = { message: '"password" is not allowed to be empty' };
@@ -22,4 +23,5 @@ module.exports = {
   EMPTY_PASSWORD,
   INVALID_TOKEN,
   TOKEN_NOT_FOUND,
+  USER_DOES_NOT_EXISTS,
 };
