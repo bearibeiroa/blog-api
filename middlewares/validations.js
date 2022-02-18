@@ -6,6 +6,7 @@ const {
   PASSWORD_REQUEST,
   EMPTY_EMAIL,
   EMPTY_PASSWORD,
+  NAME_REQUIRED,
 } = require('../errors/errorMessages');
 
 const { BAD_REQUEST } = require('../errors/errorStatus');
@@ -44,9 +45,17 @@ const loginValidation = (req, res, next) => {
   next();
 };
 
+const categoryValidation = (req, res, next) => {
+  const { name } = req.body;
+
+  if (!name) return res.status(BAD_REQUEST).json(NAME_REQUIRED);
+  next();
+};
+
 module.exports = {
   displayNameValidation,
   emailValidation,
   passwordValidation,
   loginValidation,
+  categoryValidation,
 };
