@@ -10,6 +10,7 @@ const EMPTY_EMAIL = { message: '"email" is not allowed to be empty' };
 const EMPTY_PASSWORD = { message: '"password" is not allowed to be empty' };
 const INVALID_TOKEN = { message: 'Expired or invalid token' };
 const TOKEN_NOT_FOUND = { message: 'Token not found' };
+const NAME_REQUIRED = { message: '"name" is required' };
 
 module.exports = {
   DISPLAY_NAME,
@@ -24,4 +25,5 @@ module.exports = {
   INVALID_TOKEN,
   TOKEN_NOT_FOUND,
   USER_DOES_NOT_EXISTS,
+  NAME_REQUIRED,
 };
