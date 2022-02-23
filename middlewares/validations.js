@@ -6,7 +6,6 @@ const {
   PASSWORD_REQUEST,
   EMPTY_EMAIL,
   EMPTY_PASSWORD,
-  NAME_REQUIRED,
   TITLE_REQUIRED,
   CONTENT_REQUIRED,
   CATEGORY_REQUIRED,
@@ -49,18 +48,18 @@ const loginValidation = (req, res, next) => {
 };
 
 const categoryValidation = (req, res, next) => {
-  const { name } = req.body;
+  const { categoryIds } = req.body;
 
-  if (!name) return res.status(BAD_REQUEST).json(NAME_REQUIRED);
+  if (!categoryIds) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
   next();
 };
 
 const blogPostValidation = (req, res, next) => {
-  const { title, content, categoriesIds } = req.body;
+  const { title, content, categoryIds } = req.body;
 
   if (!title || title === '') return res.status(BAD_REQUEST).json(TITLE_REQUIRED);
   if (!content) return res.status(BAD_REQUEST).json(CONTENT_REQUIRED);
-  if (categoriesIds.length === 0) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
+  if (categoryIds.length === 0) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
   next();
 };
 

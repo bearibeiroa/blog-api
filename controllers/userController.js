@@ -21,8 +21,9 @@ const create = rescue(async (req, res) => {
   return res.status(201).json({ token });
 });
 
-const getUsers = rescue(async (_req, res) => {
+const getUsers = rescue(async (req, res) => {
   const users = await getAllUsers();
+  console.log(req.bia);
   return res.status(200).json(users);
 });
 
