@@ -1,8 +1,11 @@
 const rescue = require('express-rescue');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { CONFLICT, NOT_FOUND } = require('../errors/errorStatus');
 const { USER_ALLREADY_EXIST, USER_DOES_NOT_EXISTS } = require('../errors/errorMessages');
 const { createUser, getAllUsers, getByPk } = require('../services/userServices');
+
+const SECRET = process.env.JWT_SECRET;
 
 const create = rescue(async (req, res) => {
   const { displayName, email, password, image } = req.body;
@@ -10,7 +13,9 @@ const create = rescue(async (req, res) => {
   const userEmail = await User.findOne({ where: { email } });
 
   if (userEmail) return res.status(CONFLICT).json(USER_ALLREADY_EXIST);
-  const token = await createUser(displayName, email, password, image);
+  const user = await createUser(displayName, email, password, image);
+  const token = jwt.sign(user[0], SECRET);
+  console.log(token);
 
   return res.status(201).json({ token });
 });

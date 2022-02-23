@@ -5,10 +5,9 @@ require('dotenv').config();
 
 const secret = process.env.JWT_SECRET;
 
-const createToken = async (email) => {
-  const result = await User.findOne({ where: { email } });
-  console.log(result);
-
+const createToken = async (email, password) => {
+  const result = await User.findOne({ where: { email, password } });
+    // console.log(result.dataValues);
   if (!result) return { message: 'The email field not to be empty' };
 
   const jwtConfig = {
@@ -16,12 +15,8 @@ const createToken = async (email) => {
     algorithm: 'HS256',
   };
 
-  const data = {
-    email,
-    id: result.id,
-  };
-
-  const token = jwt.sign({ data }, secret, jwtConfig);
+  const token = jwt.sign(result.dataValues, secret, jwtConfig);
+  console.log(token);
   return token;
 };
 

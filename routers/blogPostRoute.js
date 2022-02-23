@@ -8,7 +8,7 @@ const { blogPostValidation } = require('../middlewares/validations');
 
 router.post('/',
   authentication,
-  createPost,
-  blogPostValidation);
+  blogPostValidation,
+  createPost);
 
 module.exports = router;
