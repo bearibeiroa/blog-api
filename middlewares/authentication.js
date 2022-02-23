@@ -15,7 +15,6 @@ const authentication = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(authorization, secret);
-    console.log('aqui decoded:', decoded);
     const userEmail = await getUserByEmail(decoded.email);
     if (!userEmail) {
       return res.status(UNAUTHORIZED).json(INVALID_TOKEN);

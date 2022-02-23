@@ -9,6 +9,7 @@ const {
   TITLE_REQUIRED,
   CONTENT_REQUIRED,
   CATEGORY_REQUIRED,
+  NAME_REQUIRED,
 } = require('../errors/errorMessages');
 
 const { BAD_REQUEST } = require('../errors/errorStatus');
@@ -54,6 +55,13 @@ const categoryValidation = (req, res, next) => {
   next();
 };
 
+const nameCategoryValidation = (req, res, next) => {
+  const { name } = req.body;
+
+  if (!name) return res.status(BAD_REQUEST).json(NAME_REQUIRED);
+  next();
+};
+
 const blogPostValidation = (req, res, next) => {
   const { title, content, categoryIds } = req.body;
 
@@ -70,4 +78,5 @@ module.exports = {
   loginValidation,
   categoryValidation,
   blogPostValidation,
+  nameCategoryValidation,
 };
