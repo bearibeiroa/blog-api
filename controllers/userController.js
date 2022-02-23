@@ -11,10 +11,11 @@ const create = rescue(async (req, res) => {
   const { displayName, email, password, image } = req.body;
 
   const userEmail = await User.findOne({ where: { email } });
-
+  
   if (userEmail) return res.status(CONFLICT).json(USER_ALLREADY_EXIST);
   const user = await createUser(displayName, email, password, image);
-  const token = jwt.sign(user[0], SECRET);
+  const { id } = user.dataValues;
+  const token = jwt.sign({ id, displayName, email }, SECRET);
   console.log(token);
 
   return res.status(201).json({ token });
