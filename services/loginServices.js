@@ -7,6 +7,7 @@ const secret = process.env.JWT_SECRET;
 
 const createToken = async (email) => {
   const result = await User.findOne({ where: { email } });
+  console.log(result);
 
   if (!result) return { message: 'The email field not to be empty' };
 
@@ -17,6 +18,7 @@ const createToken = async (email) => {
 
   const data = {
     email,
+    id: result.id,
   };
 
   const token = jwt.sign({ data }, secret, jwtConfig);

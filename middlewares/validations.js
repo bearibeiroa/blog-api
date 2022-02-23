@@ -7,6 +7,9 @@ const {
   EMPTY_EMAIL,
   EMPTY_PASSWORD,
   NAME_REQUIRED,
+  TITLE_REQUIRED,
+  CONTENT_REQUIRED,
+  CATEGORY_REQUIRED,
 } = require('../errors/errorMessages');
 
 const { BAD_REQUEST } = require('../errors/errorStatus');
@@ -52,10 +55,20 @@ const categoryValidation = (req, res, next) => {
   next();
 };
 
+const blogPostValidation = (req, res, next) => {
+  const { title, content, categoriesIds } = req.body;
+
+  if (!title || title === '') return res.status(BAD_REQUEST).json(TITLE_REQUIRED);
+  if (!content) return res.status(BAD_REQUEST).json(CONTENT_REQUIRED);
+  if (categoriesIds.length === 0) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
+  next();
+};
+
 module.exports = {
   displayNameValidation,
   emailValidation,
   passwordValidation,
   loginValidation,
   categoryValidation,
+  blogPostValidation,
 };
