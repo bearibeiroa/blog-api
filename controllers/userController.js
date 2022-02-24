@@ -1,9 +1,13 @@
 const rescue = require('express-rescue');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
-const { CONFLICT, NOT_FOUND } = require('../errors/errorStatus');
-const { USER_ALLREADY_EXIST, USER_DOES_NOT_EXISTS } = require('../errors/errorMessages');
-const { createUser, getAllUsers, getByPk } = require('../services/userServices');
+const { CONFLICT, NOT_FOUND, NO_BODY } = require('../errors/errorStatus');
+const {
+  USER_ALLREADY_EXIST,
+  USER_DOES_NOT_EXISTS,
+  NO_BODY_RESPONSE,
+} = require('../errors/errorMessages');
+const { createUser, getAllUsers, getByPk, deleteUser } = require('../services/userServices');
 
 const SECRET = process.env.JWT_SECRET;
 
@@ -36,8 +40,15 @@ const getUsersById = rescue(async (req, res) => {
   return res.status(200).json(user);
 });
 
+const deleteUserById = rescue(async (req, res) => {
+  const { id } = req.bia;
+  await deleteUser(id);
+  return res.status(NO_BODY).send(NO_BODY_RESPONSE);
+});
+
 module.exports = {
   create,
   getUsers,
   getUsersById,
+  deleteUserById,
 };
