@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const { authentication } = require('../middlewares/authentication');
-const { createPost } = require('../controllers/blogPostController');
+const { createPost, getAllPosts } = require('../controllers/blogPostController');
 const { blogPostValidation, categoryValidation } = require('../middlewares/validations');
 
 router.post('/',
@@ -11,5 +11,7 @@ router.post('/',
   categoryValidation,
   blogPostValidation,
   createPost);
+
+router.get('/', authentication, getAllPosts);
 
 module.exports = router;

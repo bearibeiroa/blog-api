@@ -1,4 +1,5 @@
 const express = require('express');
+const rescue = require('express-rescue');
 
 const router = express.Router();
 
@@ -8,6 +9,6 @@ const { categoriesCreate, getCategories } = require('../controllers/categoryCont
 const { nameCategoryValidation } = require('../middlewares/validations');
 
 router.post('/', authentication, nameCategoryValidation, categoriesCreate);
-router.get('/', authentication, getCategories);
+router.get('/', authentication, rescue(getCategories));
 
 module.exports = router;

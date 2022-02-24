@@ -1,6 +1,6 @@
 // const jwt = require('jsonwebtoken');
 const rescue = require('express-rescue');
-const { create } = require('../services/blogPostServices');
+const { create, getPosts } = require('../services/blogPostServices');
 
 require('dotenv').config();
 
@@ -19,4 +19,10 @@ const createPost = rescue(async (req, res) => {
   // const newPost = await create({ title, content, userId: id });
   return res.status(201).json(result);
 });
-module.exports = { createPost };
+
+const getAllPosts = rescue(async (_req, res) => {
+  const blogPosts = await getPosts();
+  return res.status(200).json(blogPosts);
+});
+
+module.exports = { createPost, getAllPosts };
