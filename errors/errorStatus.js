@@ -1,3 +1,4 @@
+const NO_BODY = 204;
 const BAD_REQUEST = 400;
 const CONFLICT = 409;
 const UNAUTHORIZED = 401;
@@ -8,4 +9,5 @@ module.exports = {
   CONFLICT,
   UNAUTHORIZED,
   NOT_FOUND,
+  NO_BODY,
 }; 

@@ -1,6 +1,10 @@
 const blogPostService = require('../services/blogPostServices');
-const { UNAUTHORIZED_USER, CATEGORIES_NOT_BE_EDITED } = require('../errors/errorMessages');
-const { UNAUTHORIZED, BAD_REQUEST } = require('../errors/errorStatus');
+const {
+  UNAUTHORIZED_USER,
+  CATEGORIES_NOT_BE_EDITED,
+  POST_DOES_NOT_EXISTS,
+} = require('../errors/errorMessages');
+const { UNAUTHORIZED, BAD_REQUEST, NOT_FOUND } = require('../errors/errorStatus');
 
 const userValidation = async (req, res, next) => {
     const { id: user } = req.bia;
@@ -27,7 +31,20 @@ const categoryEditableValidation = (req, res, next) => {
     next();
 };
 
+const postExistsValidation = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const postId = await blogPostService.getPostById(id);
+    if (!postId) return res.status(NOT_FOUND).json(POST_DOES_NOT_EXISTS);
+
+    next();
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 module.exports = {
   userValidation,
   categoryEditableValidation,
+  postExistsValidation,
 };
