@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { create, getUsers, getUsersById } = require('../controllers/userController');
+const { create, getUsers, getUsersById, deleteUserById } = require('../controllers/userController');
 const { authentication } = require('../middlewares/authentication');
 const {
   displayNameValidation,
@@ -24,5 +24,10 @@ router
     emailValidation,
     passwordValidation,
     create);
+
+router
+  .delete('/me',
+    authentication,
+    deleteUserById);
 
 module.exports = router;
