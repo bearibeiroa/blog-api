@@ -4,9 +4,17 @@ const router = express.Router();
 
 const { authentication } = require('../middlewares/authentication');
 const {
-  createPost, getAllPosts, getPostByPk, update } = require('../controllers/blogPostController');
+  createPost,
+  getAllPosts,
+  getPostByPk,
+  update,
+  deletePostById } = require('../controllers/blogPostController');
 const { blogPostValidation, categoryValidation } = require('../middlewares/validations');
-const { categoryEditableValidation, userValidation } = require('../middlewares/postValidation');
+const {
+  categoryEditableValidation,
+  userValidation,
+  postExistsValidation,
+} = require('../middlewares/postValidation');
 
 router.post('/',
   authentication,
@@ -26,5 +34,11 @@ router.put('/:id',
   categoryEditableValidation,
   userValidation,
   update);
+
+router.delete('/:id',
+  postExistsValidation,
+  authentication,
+  userValidation,
+  deletePostById);
 
 module.exports = router;
