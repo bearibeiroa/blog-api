@@ -15,6 +15,7 @@ const TITLE_REQUIRED = { message: '"title" is required' };
 const CONTENT_REQUIRED = { message: '"content" is required' };
 const CATEGORY_REQUIRED = { message: '"categoryIds" is required' };
 const CATEGORY_ID_NOT_FOUND = { message: '"categoryIds" not found' };
+const POST_DOES_NOT_EXISTS = { message: 'Post does not exist' };
 
 module.exports = {
   DISPLAY_NAME,
@@ -34,4 +35,5 @@ module.exports = {
   CONTENT_REQUIRED,
   CATEGORY_REQUIRED,
   CATEGORY_ID_NOT_FOUND,
+  POST_DOES_NOT_EXISTS,
 };
