@@ -5,6 +5,7 @@ const {
   getPostById,
   updatePost,
   deletePost,
+  searchPost,
 } = require('../services/blogPostServices');
 const { NOT_FOUND, NO_BODY } = require('../errors/errorStatus');
 const { POST_DOES_NOT_EXISTS, NO_BODY_RESPONSE } = require('../errors/errorMessages');
@@ -49,10 +50,17 @@ const deletePostById = rescue(async (req, res) => {
   return res.status(NO_BODY).send(NO_BODY_RESPONSE);
 });
 
+const getSearch = rescue(async (req, res) => {
+  const { q } = req.query;
+  const postsSearch = await searchPost(q);
+  return res.status(200).json(postsSearch);
+});
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostByPk,
   update,
   deletePostById,
+  getSearch,
 };
