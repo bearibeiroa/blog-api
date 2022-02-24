@@ -38,7 +38,6 @@ const getPostByPk = rescue(async (req, res) => {
 const update = rescue(async (req, res) => {
   const { id } = req.params;
   const { userId, categories } = req.bia;
-  console.log(req.bia);
   const { title, content } = req.body;
   await updatePost({ id, title, content });
   return res.status(200).json({ title, content, userId, categories });
