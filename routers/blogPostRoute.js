@@ -8,13 +8,18 @@ const {
   getAllPosts,
   getPostByPk,
   update,
-  deletePostById } = require('../controllers/blogPostController');
+  deletePostById,
+  getSearch } = require('../controllers/blogPostController');
 const { blogPostValidation, categoryValidation } = require('../middlewares/validations');
 const {
   categoryEditableValidation,
   userValidation,
   postExistsValidation,
 } = require('../middlewares/postValidation');
+
+router.get('/search',
+  authentication,
+  getSearch);
 
 router.post('/',
   authentication,
