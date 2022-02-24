@@ -1,7 +1,13 @@
 const rescue = require('express-rescue');
-const { create, getPosts, getPostById, updatePost } = require('../services/blogPostServices');
-const { NOT_FOUND } = require('../errors/errorStatus');
-const { POST_DOES_NOT_EXISTS } = require('../errors/errorMessages');
+const {
+  create,
+  getPosts,
+  getPostById,
+  updatePost,
+  deletePost,
+} = require('../services/blogPostServices');
+const { NOT_FOUND, NO_BODY } = require('../errors/errorStatus');
+const { POST_DOES_NOT_EXISTS, NO_BODY_RESPONSE } = require('../errors/errorMessages');
 
 require('dotenv').config();
 
@@ -38,4 +44,16 @@ const update = rescue(async (req, res) => {
   return res.status(200).json({ title, content, userId, categories });
 });
 
-module.exports = { createPost, getAllPosts, getPostByPk, update };
+const deletePostById = rescue(async (req, res) => {
+  const { id } = req.params;
+  await deletePost(id);
+  return res.status(NO_BODY).send(NO_BODY_RESPONSE);
+});
+
+module.exports = {
+  createPost,
+  getAllPosts,
+  getPostByPk,
+  update,
+  deletePostById,
+};
