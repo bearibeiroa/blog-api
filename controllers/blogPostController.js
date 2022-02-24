@@ -1,6 +1,5 @@
-// const jwt = require('jsonwebtoken');
 const rescue = require('express-rescue');
-const { create, getPosts, getPostById } = require('../services/blogPostServices');
+const { create, getPosts, getPostById, updatePost } = require('../services/blogPostServices');
 const { NOT_FOUND } = require('../errors/errorStatus');
 const { POST_DOES_NOT_EXISTS } = require('../errors/errorMessages');
 
@@ -30,4 +29,13 @@ const getPostByPk = rescue(async (req, res) => {
     return res.status(200).json(post);
 });
 
-module.exports = { createPost, getAllPosts, getPostByPk };
+const update = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { userId, categories } = req.bia;
+  console.log(req.bia);
+  const { title, content } = req.body;
+  await updatePost({ id, title, content });
+  return res.status(200).json({ title, content, userId, categories });
+});
+
+module.exports = { createPost, getAllPosts, getPostByPk, update };
