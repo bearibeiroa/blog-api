@@ -13,6 +13,7 @@ const {
 } = require('../errors/errorMessages');
 
 const { BAD_REQUEST } = require('../errors/errorStatus');
+const { getAllCategories } = require('../services/categoryServices');
 
 const displayNameValidation = (req, res, next) => {
   const { displayName } = req.body;
@@ -48,10 +49,28 @@ const loginValidation = (req, res, next) => {
   next();
 };
 
-const categoryValidation = (req, res, next) => {
+// Consulta ao repositório do Danilo Santos.
+
+const categoryValidation = async (req, res, next) => {
+  const validationFirsItem = (item, array) => array.some((itemArrat) => item === itemArrat.id);
+
   const { categoryIds } = req.body;
 
   if (!categoryIds) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
+
+  const categoriesArray = await getAllCategories();
+
+  const checkCategories = categoryIds.every((item) => { 
+    if (validationFirsItem(item, categoriesArray)) {
+      return true;
+    }
+    return false;
+  });
+
+  if (!checkCategories) {
+    return res.status(400).json({ message: '"categoryIds" not found' });
+  }
+
   next();
 };
 
@@ -67,7 +86,7 @@ const blogPostValidation = (req, res, next) => {
 
   if (!title || title === '') return res.status(BAD_REQUEST).json(TITLE_REQUIRED);
   if (!content) return res.status(BAD_REQUEST).json(CONTENT_REQUIRED);
-  if (categoryIds.length === 0) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
+  if (categoryIds === 0) return res.status(BAD_REQUEST).json(CATEGORY_REQUIRED);
   next();
 };
 

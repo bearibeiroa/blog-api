@@ -10,7 +10,6 @@ const categoriesCreate = rescue(async (req, res) => {
 
 const getCategories = rescue(async (req, res) => {
   const categories = await getAllCategories();
-
   return res.status(200).json(categories);
 });
 
