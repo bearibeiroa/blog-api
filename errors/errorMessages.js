@@ -16,6 +16,8 @@ const CONTENT_REQUIRED = { message: '"content" is required' };
 const CATEGORY_REQUIRED = { message: '"categoryIds" is required' };
 const CATEGORY_ID_NOT_FOUND = { message: '"categoryIds" not found' };
 const POST_DOES_NOT_EXISTS = { message: 'Post does not exist' };
+const UNAUTHORIZED_USER = { message: 'Unauthorized user' };
+const CATEGORIES_NOT_BE_EDITED = { message: 'Categories cannot be edited' };
 
 module.exports = {
   DISPLAY_NAME,
@@ -36,4 +38,6 @@ module.exports = {
   CATEGORY_REQUIRED,
   CATEGORY_ID_NOT_FOUND,
   POST_DOES_NOT_EXISTS,
+  UNAUTHORIZED_USER,
+  CATEGORIES_NOT_BE_EDITED,
 };
